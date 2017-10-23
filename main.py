@@ -12,8 +12,7 @@ backgroundx = 0
 backgroundy = 0
 
 logx = 801
-logy = random.randint(100, 500)
-# logy = 100
+logy = 100
 
 playerx = 15
 playery = 534
@@ -54,33 +53,6 @@ class Main(object):
       pass
     return logy
 
-  def log_coord_gen(self, logx, logy):
-    logx_list = []
-    logy_list = []    
-
-    # Generate x coordinates
-    for i in range(2):
-      logx_coords = logx + random.randint(30, 100)
-      logx_list.append(logx_coords)
-
-    # Generate y coordinates
-    n = random.randint(100, 500)
-    logy_list.append(n)
-
-    if logx < -85 and logx > 800:
-      for i in range(2):
-        n = random.randint(100, 500)
-        logy_list.append(n)
-    else:
-      pass
-
-    # [1, 2], [a, b] = [(1,a),(2,b)]
-    x_y_coord = zip(logx_list, logy_list)
-    
-    return x_y_coord
-
-
-
 windowSurface = pygame.display.set_mode((width, height),0, 32)
 pygame.display.set_caption('SYRUP CHASER')
 
@@ -88,7 +60,6 @@ background = pygame.image.load("Chrachters/background.jpg")
 character = pygame.image.load("Chrachters/polar.gif")
 log = pygame.image.load("Chrachters/Log.gif")
 #PUT ALL THE CODE ABOVE THIS COMMENT#
-
 
 while True:
     for event in pygame.event.get():
@@ -99,18 +70,23 @@ while True:
             if event.key == K_UP:
                 playery = Main().rise(playery)
     
-
     windowSurface.blit(background, (backgroundx, backgroundy)) # Background
     windowSurface.blit(character, (playerx, playery)) # Chrachters
     windowSurface.blit(log, (logx, logy)) # Log
 
-    x_y_coord = Main().log_coord_gen(logx, logy)
+    logy_list = [100, 250, 400, 550]
+    logx_list = [801]
+    for i in range(3):
+      logx_distance = random.randint(50, 150)
+      logx_list.append(logx+logx_distance)
+      print(logx_list)
 
+
+    x_y_coord = zip(logx_list, logy_list)
     print(x_y_coord)
 
     for coord in x_y_coord:
       windowSurface.blit(log, coord)
-
 
     pygame.display.update()
     pygame.time.Clock().tick(30)
